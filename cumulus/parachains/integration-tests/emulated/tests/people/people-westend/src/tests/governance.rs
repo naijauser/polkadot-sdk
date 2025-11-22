@@ -49,7 +49,7 @@ fn relay_commands_add_registrar() {
 
 		let xcm_message = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 			dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-			message: bx!(VersionedXcm::from(Xcm(vec![
+			message: bx!(VersionedXcm::from(Xcm::new(vec![
 				UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 				Transact {
 					origin_kind,
@@ -114,7 +114,7 @@ fn relay_commands_add_registrar_wrong_origin() {
 
 			let xcm_message = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 				dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-				message: bx!(VersionedXcm::from(Xcm(vec![
+				message: bx!(VersionedXcm::from(Xcm::new(vec![
 					UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 					Transact {
 						origin_kind,
@@ -207,7 +207,7 @@ fn relay_commands_kill_identity() {
 
 		let xcm_message = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 			dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-			message: bx!(VersionedXcm::from(Xcm(vec![
+			message: bx!(VersionedXcm::from(Xcm::new(vec![
 				UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 				Transact {
 					origin_kind,
@@ -271,7 +271,7 @@ fn relay_commands_kill_identity_wrong_origin() {
 
 			let xcm_message = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 				dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-				message: bx!(VersionedXcm::from(Xcm(vec![
+				message: bx!(VersionedXcm::from(Xcm::new(vec![
 					UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 					Transact {
 						origin_kind,
@@ -323,7 +323,7 @@ fn relay_commands_add_remove_username_authority() {
 
 		let add_authority_xcm_msg = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 			dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-			message: bx!(VersionedXcm::from(Xcm(vec![
+			message: bx!(VersionedXcm::from(Xcm::new(vec![
 				UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 				Transact {
 					origin_kind,
@@ -414,7 +414,7 @@ fn relay_commands_add_remove_username_authority() {
 
 		let remove_authority_xcm_msg = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 			dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-			message: bx!(VersionedXcm::from(Xcm(vec![
+			message: bx!(VersionedXcm::from(Xcm::new(vec![
 				UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 				Transact {
 					origin_kind,
@@ -480,7 +480,7 @@ fn relay_commands_add_remove_username_authority_wrong_origin() {
 
 			let add_authority_xcm_msg = RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 				dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-				message: bx!(VersionedXcm::from(Xcm(vec![
+				message: bx!(VersionedXcm::from(Xcm::new(vec![
 					UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 					Transact {
 						origin_kind,
@@ -523,7 +523,7 @@ fn relay_commands_add_remove_username_authority_wrong_origin() {
 			let remove_authority_xcm_msg =
 				RuntimeCall::XcmPallet(pallet_xcm::Call::<Runtime>::send {
 					dest: bx!(VersionedLocation::from(Location::new(0, [Parachain(1004)]))),
-					message: bx!(VersionedXcm::from(Xcm(vec![
+					message: bx!(VersionedXcm::from(Xcm::new(vec![
 						UnpaidExecution { weight_limit: Unlimited, check_origin: None },
 						Transact {
 							origin_kind: OriginKind::SovereignAccount,

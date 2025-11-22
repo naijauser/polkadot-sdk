@@ -144,7 +144,7 @@ pub fn teleports_for_native_asset_works<
 			let native_asset_id = Location::parent();
 
 			// 1. process received teleported assets from relaychain
-			let xcm = Xcm(vec![
+			let xcm = Xcm::new(vec![
 				ReceiveTeleportedAsset(Assets::from(vec![Asset {
 					id: AssetId(native_asset_id.clone()),
 					fun: Fungible(native_asset_amount_received.into()),
@@ -521,7 +521,7 @@ pub fn teleports_for_foreign_assets_works<
 			);
 
 			// 1. process received teleported assets from sibling parachain (foreign_para_id)
-			let xcm = Xcm(vec![
+			let xcm = Xcm::new(vec![
 				// BuyExecution with relaychain native token
 				WithdrawAsset(buy_execution_fee.clone().into()),
 				BuyExecution {
@@ -1246,7 +1246,7 @@ pub fn create_and_manage_foreign_assets_for_local_consensus_parachain_assets_wor
 
 			// lets simulate this was triggered by relay chain from local consensus sibling
 			// parachain
-			let xcm = Xcm(vec![
+			let xcm = Xcm::new(vec![
 				WithdrawAsset(buy_execution_fee.clone().into()),
 				BuyExecution { fees: buy_execution_fee.clone(), weight_limit: Unlimited },
 				Transact {
@@ -1365,7 +1365,7 @@ pub fn create_and_manage_foreign_assets_for_local_consensus_parachain_assets_wor
 				admin: foreign_creator_as_account_id.clone().into(),
 				min_balance: 1.into(),
 			});
-			let xcm = Xcm(vec![
+			let xcm = Xcm::new(vec![
 				WithdrawAsset(buy_execution_fee.clone().into()),
 				BuyExecution { fees: buy_execution_fee.clone(), weight_limit: Unlimited },
 				Transact {

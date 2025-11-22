@@ -21,6 +21,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use core::result;
 use scale_info::TypeInfo;
 
+pub use crate::traits::{PreparedMessage, Weightless};
 pub use sp_weights::Weight;
 
 use super::*;
@@ -295,13 +296,6 @@ impl From<Error> for Outcome {
 	}
 }
 
-pub trait PreparedMessage {
-	fn weight_of(&self) -> Weight;
-}
-
-/// The index of an instruction in an XCM.
-pub type InstructionIndex = u8;
-
 /// Type of XCM message executor.
 pub trait ExecuteXcm<Call> {
 	type Prepared: PreparedMessage;
@@ -333,13 +327,6 @@ pub trait ExecuteXcm<Call> {
 	/// Deduct some `fees` to the sovereign account of the given `location` and place them as per
 	/// the convention for fees.
 	fn charge_fees(location: impl Into<Location>, fees: Assets) -> Result;
-}
-
-pub enum Weightless {}
-impl PreparedMessage for Weightless {
-	fn weight_of(&self) -> Weight {
-		unreachable!()
-	}
 }
 
 impl<C> ExecuteXcm<C> for () {

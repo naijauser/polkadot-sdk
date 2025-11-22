@@ -51,7 +51,7 @@ benchmarks_instance_pallet! {
 		let mut executor = new_executor::<T>(sender_location);
 		executor.set_holding(worst_case_holding.into());
 		let instruction = Instruction::<XcmCallOf<T>>::WithdrawAsset(vec![asset.clone()].into());
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -73,7 +73,7 @@ benchmarks_instance_pallet! {
 
 		let mut executor = new_executor::<T>(sender_location);
 		let instruction = Instruction::TransferAsset { assets, beneficiary: dest_location };
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -109,7 +109,7 @@ benchmarks_instance_pallet! {
 			dest: dest_location,
 			xcm: Xcm::new()
 		};
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -126,7 +126,7 @@ benchmarks_instance_pallet! {
 
 		let mut executor = new_executor::<T>(trusted_reserve);
 		let instruction = Instruction::ReserveAssetDeposited(assets.clone());
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -165,9 +165,9 @@ benchmarks_instance_pallet! {
 			// Worst case is looking through all holdings for every asset explicitly - respecting the limit `MAX_ITEMS_IN_ASSETS`.
 			assets: Definite(holding.into_inner().into_iter().take(MAX_ITEMS_IN_ASSETS).collect::<Vec<_>>().into()),
 			reserve,
-			xcm: Xcm(vec![])
+			xcm: Xcm::new(vec![])
 		};
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -197,7 +197,7 @@ benchmarks_instance_pallet! {
 
 		let mut executor = new_executor::<T>(trusted_teleporter);
 		let instruction = Instruction::ReceiveTeleportedAsset(assets.clone());
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm).map_err(|_| {
 			BenchmarkError::Override(
@@ -232,7 +232,7 @@ benchmarks_instance_pallet! {
 			assets: asset.into(),
 			beneficiary: dest_location,
 		};
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -263,7 +263,7 @@ benchmarks_instance_pallet! {
 			dest: dest_location,
 			xcm: Xcm::new(),
 		};
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -292,7 +292,7 @@ benchmarks_instance_pallet! {
 			dest: dest_location,
 			xcm: Xcm::new(),
 		};
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {
@@ -325,7 +325,7 @@ benchmarks_instance_pallet! {
 			assets: BoundedVec::truncate_from(vec![AssetTransferFilter::ReserveDeposit(asset.into())]),
 			remote_xcm: Xcm::new(),
 		};
-		let xcm = Xcm(vec![instruction]);
+		let xcm = Xcm::new(vec![instruction]);
 	}: {
 		executor.bench_process(xcm)?;
 	} verify {

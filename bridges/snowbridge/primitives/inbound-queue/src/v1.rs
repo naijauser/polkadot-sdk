@@ -264,7 +264,7 @@ where
 			// This `SetAppendix` ensures that `xcm_fee` not spent by `Transact` will be
 			// deposited to snowbridge sovereign, instead of being trapped, regardless of
 			// `Transact` success or not.
-			SetAppendix(Xcm(vec![
+			SetAppendix(Xcm::new(vec![
 				RefundSurplus,
 				DepositAsset { assets: AllCounted(1).into(), beneficiary: bridge_location },
 			])),
@@ -348,7 +348,7 @@ where
 				instructions.extend(vec![
 					// After program finishes deposit any leftover assets to the snowbridge
 					// sovereign.
-					SetAppendix(Xcm(vec![DepositAsset {
+					SetAppendix(Xcm::new(vec![DepositAsset {
 						assets: Wild(AllCounted(2)),
 						beneficiary: bridge_location,
 					}])),

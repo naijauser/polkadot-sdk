@@ -35,7 +35,7 @@ pub fn xcm_transact_paid_execution(
 ) -> VersionedXcm<()> {
 	let weight_limit = WeightLimit::Unlimited;
 
-	VersionedXcm::from(Xcm(vec![
+	VersionedXcm::from(Xcm::new(vec![
 		WithdrawAsset(fees.clone().into()),
 		BuyExecution { fees, weight_limit },
 		Transact { origin_kind, call, fallback_max_weight: None },
@@ -59,7 +59,7 @@ pub fn xcm_transact_unpaid_execution(
 	let weight_limit = WeightLimit::Unlimited;
 	let check_origin = None;
 
-	VersionedXcm::from(Xcm(vec![
+	VersionedXcm::from(Xcm::new(vec![
 		UnpaidExecution { weight_limit, check_origin },
 		Transact { origin_kind, call, fallback_max_weight: None },
 		ExpectTransactStatus(MaybeErrorCode::Success),

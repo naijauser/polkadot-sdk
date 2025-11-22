@@ -1663,7 +1663,7 @@ fn reserve_withdraw_from_untrusted_reserve_fails() {
 
 	// this should also fail
 	AssetHubRococo::execute_with(|| {
-		let xcm: Xcm<asset_hub_rococo_runtime::RuntimeCall> = Xcm(vec![
+		let xcm: Xcm<asset_hub_rococo_runtime::RuntimeCall> = Xcm::new(vec![
 			WithdrawAsset(assets.into()),
 			InitiateReserveWithdraw {
 				assets: Wild(All),

@@ -21,7 +21,7 @@ fn expect_pallet_should_work() {
 	AllowUnpaidFrom::set(vec![[Parachain(1)].into()]);
 	// They want to transfer 100 of our native asset from sovereign account of parachain #1 into #2
 	// and let them know to hand it to account #3.
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -38,7 +38,7 @@ fn expect_pallet_should_work() {
 	);
 	assert_eq!(r, Outcome::Complete { used: Weight::from_parts(10, 10) });
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -59,7 +59,7 @@ fn expect_pallet_should_work() {
 #[test]
 fn expect_pallet_should_fail_correctly() {
 	AllowUnpaidFrom::set(vec![[Parachain(1)].into()]);
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -82,7 +82,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"System".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -105,7 +105,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_system".as_ref().into(),
@@ -128,7 +128,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 0,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -151,7 +151,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 2,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -174,7 +174,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -197,7 +197,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),
@@ -220,7 +220,7 @@ fn expect_pallet_should_fail_correctly() {
 		}
 	);
 
-	let message = Xcm(vec![ExpectPallet {
+	let message = Xcm::new(vec![ExpectPallet {
 		index: 1,
 		name: b"Balances".as_ref().into(),
 		module_name: b"pallet_balances".as_ref().into(),

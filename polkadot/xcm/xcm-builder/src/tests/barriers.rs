@@ -777,7 +777,7 @@ fn allow_subscriptions_from_should_work() {
 	// invalid XCM (unexpected instruction before)
 	assert_should_execute(
 		vec![
-			SetAppendix(Xcm(vec![])),
+			SetAppendix(Xcm::new(vec![])),
 			SubscribeVersion {
 				query_id: Default::default(),
 				max_response_weight: Default::default(),
@@ -787,7 +787,7 @@ fn allow_subscriptions_from_should_work() {
 		Err(ProcessMessageError::BadFormat),
 	);
 	assert_should_execute(
-		vec![SetAppendix(Xcm(vec![])), UnsubscribeVersion],
+		vec![SetAppendix(Xcm::new(vec![])), UnsubscribeVersion],
 		Location::parent(),
 		Err(ProcessMessageError::BadFormat),
 	);
@@ -810,7 +810,7 @@ fn allow_subscriptions_from_should_work() {
 	);
 	// invalid XCM (unexpected instruction)
 	assert_should_execute(
-		vec![SetAppendix(Xcm(vec![]))],
+		vec![SetAppendix(Xcm::new(vec![]))],
 		Location::parent(),
 		Err(ProcessMessageError::BadFormat),
 	);
@@ -851,7 +851,7 @@ fn allow_hrmp_notifications_from_relay_chain_should_work() {
 
 	// invalid XCM (unexpected instruction before)
 	assert_should_execute(
-		vec![SetAppendix(Xcm(vec![])), HrmpChannelAccepted { recipient: Default::default() }],
+		vec![SetAppendix(Xcm::new(vec![])), HrmpChannelAccepted { recipient: Default::default() }],
 		Location::parent(),
 		Err(ProcessMessageError::BadFormat),
 	);
@@ -863,7 +863,7 @@ fn allow_hrmp_notifications_from_relay_chain_should_work() {
 	);
 	// invalid XCM (unexpected instruction)
 	assert_should_execute(
-		vec![SetAppendix(Xcm(vec![]))],
+		vec![SetAppendix(Xcm::new(vec![]))],
 		Location::parent(),
 		Err(ProcessMessageError::BadFormat),
 	);

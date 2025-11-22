@@ -59,6 +59,8 @@ pub use record_xcm::RecordXcm;
 #[deprecated = "Use `sp_runtime::traits::` instead"]
 pub use sp_runtime::traits::{Identity, TryConvertInto as JustTry};
 pub use weight::{WeightBounds, WeightTrader};
+mod execute;
+pub use execute::Execute;
 
 pub mod prelude {
 	pub use super::{

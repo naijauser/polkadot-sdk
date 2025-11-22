@@ -98,13 +98,37 @@ where
 		asset_kind: Self::AssetKind,
 		amount: Self::Balance,
 	) -> Result<Self::Id, Self::Error> {
-		TransferOverXcmHelper::send_remote_transfer_xcm(
-			Interior::get().into(),
-			who,
-			asset_kind,
-			amount,
-			None,
-		)
+		let locatable = AssetKindToLocatableAsset::try_convert(asset_kind)
+			.map_err(|_| xcm::latest::Error::InvalidLocation)?;
+		let LocatableAssetId { asset_id, location: asset_location } = locatable;
+		let destination = Querier::UniversalLocation::get()
+			.invert_target(&asset_location)
+			.map_err(|()| Self::Error::LocationNotInvertible)?;
+		let beneficiary = BeneficiaryRefToLocation::try_convert(&who)
+			.map_err(|_| xcm::latest::Error::InvalidLocation)?;
+
+		let query_id = Querier::new_query(asset_location.clone(), Timeout::get(), Interior::get());
+
+		let message = Xcm::new(vec![
+			DescendOrigin(Interior::get()),
+			UnpaidExecution { weight_limit: Unlimited, check_origin: None },
+			SetAppendix(Xcm::new(vec![
+				SetFeesMode { jit_withdraw: true },
+				ReportError(QueryResponseInfo {
+					destination,
+					query_id,
+					max_weight: Weight::zero(),
+				}),
+			])),
+			TransferAsset {
+				beneficiary,
+				assets: vec![Asset { id: asset_id, fun: Fungibility::Fungible(amount) }].into(),
+			},
+		]);
+
+		let (ticket, _) = Router::validate(&mut Some(asset_location), &mut Some(message))?;
+		Router::deliver(ticket)?;
+		Ok(query_id.into())
 	}
 
 	fn check_payment(id: Self::Id) -> PaymentStatus {
